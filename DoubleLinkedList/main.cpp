@@ -1,0 +1,129 @@
+/*********************************************************
+* @brief	双方向リストで読み取ったデータを標準出力に表示
+* @date		2022/10/14
+********************************************************/
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include "ScoreData.h"
+#include "DoubleLinkedList.h"
+#include "CompareScoreData.h"
+
+
+/*********************************************************
+* @brief	スコア比較のファンクタ(昇順)
+********************************************************/
+class GreaterScore
+{
+public:
+	int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.score > right.score;
+	}
+};
+
+/*********************************************************
+* @brief	名前比較のファンクタ(降順)
+********************************************************/
+class LessName
+{
+public:
+	int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.name < right.name;
+	}
+};
+
+/*********************************************************
+* @brief	イテレートして「格納した順で」標準出力
+* @param	list: 表示したいScoreDataの双方向リスト
+********************************************************/
+void PrintList(const DoubleLinkedList<ScoreData>& list)
+{
+	auto it = list.CBegin();
+	auto end = list.CEnd();
+
+	for (; it != end; ++it)
+	{
+		std::cout
+			<< (*it).name
+			<< ((*it).name.size() < 8 ? "\t\t:" : "\t:")//整列するためです
+			<< (*it).score
+			<< std::endl;
+	}
+}
+
+/*********************************************************
+* @brief	メイン関数
+********************************************************/
+int main(void)
+{
+	//データを格納するためのリストを用意
+	DoubleLinkedList<ScoreData> list;	
+
+	//ファイルを読み込み、データを格納 
+	{
+		FILE* fp; 
+		char fileName[] = "Scores.txt";
+
+		//ファイルを開く、失敗すると終了
+		{
+			fp = fopen(fileName, "r");
+			if (fp == NULL) {
+				std::cout << fileName << "file open error!" << std::endl;
+				return -1;
+			}
+			else {
+				std::cout << fileName << "file opened!" << std::endl;
+			}
+		}
+
+		
+		//ループで1行ずつ読み取った内容をデータに格納、
+		//内容が取らない場合ループ終了
+		{
+			int score;					//スコアデータを一時格納用
+			char name[WORD_SIZE];		//名前データを一時格納用
+
+			while (fscanf(fp, "%d\t%s", &score, name) != EOF) {
+#if 0
+				//1行ずつ読み取った内容を確認
+				std::cout << name << ":" << score << std::endl;//test
+#endif
+
+				//スコアデータを作成して、データを格納
+				ScoreData data(score, name);
+				auto iter = list.End();
+				list.Insert(iter, data);
+			}
+		}
+		
+
+		//ファイルを閉じる
+		fclose(fp);
+	}
+
+	//スコア昇順でソート
+	{
+		std::cout << "\n\n========== スコア昇順 ==========\n\n";
+		list.Sort(GreaterScore());
+	}
+
+	//イテレートして「格納した順で」標準出力に表示
+	PrintList(list);
+
+
+	//名前降順でソート
+	{
+		std::cout << "\n\n========== 名前降順 ==========\n\n";
+		list.Sort(LessName());
+	}
+
+	//イテレートして「格納した順で」標準出力に表示
+	PrintList(list);
+
+	//エンターキーを押して終了
+	(void)getchar();
+	return 0;
+}
+
