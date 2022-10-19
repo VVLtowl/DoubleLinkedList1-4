@@ -84,20 +84,40 @@ int main(void)
 	{
 		std::cout << "\n\n========== スコア昇順 ==========\n\n";
 		list.Sort(ScoreGreater());
+
+		//イテレートして「格納した順で」標準出力に表示
+		PrintList(list);
 	}
 
-	//イテレートして「格納した順で」標準出力に表示
-	PrintList(list);
+	
 
+
+	//スコア降順でソート
+	{
+		std::cout << "\n\n========== スコア降順 ==========\n\n";
+		list.Sort(ScoreLess());
+
+		//イテレートして「格納した順で」標準出力に表示
+		PrintList(list);
+	}
+
+	//名前昇順でソート
+	{
+		std::cout << "\n\n========== 名前昇順 ==========\n\n";
+		list.Sort(NameGreater());
+
+		//イテレートして「格納した順で」標準出力に表示
+		PrintList(list);
+	}
 
 	//名前降順でソート
 	{
 		std::cout << "\n\n========== 名前降順 ==========\n\n";
 		list.Sort(NameLess());
-	}
 
-	//イテレートして「格納した順で」標準出力に表示
-	PrintList(list);
+		//イテレートして「格納した順で」標準出力に表示
+		PrintList(list);
+	}
 
 	//エンターキーを押して終了
 	(void)getchar();
