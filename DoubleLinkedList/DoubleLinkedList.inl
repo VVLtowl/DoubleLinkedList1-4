@@ -22,7 +22,7 @@ typename DoubleLinkedList<DataType>::ConstIterator& DoubleLinkedList<DataType>::
 {
 	assert(m_pNode && m_pList && "pre decrement: no reference");// リストの参照があるかの確認
 	assert(m_pList->Count() > 0 && "pre decrement: list is empty");//リストが空ではないかの確認
-	assert(m_pNode->pPrev != m_pList->m_pDummy && "pre decrement: begin cant decrement");// 先頭ノードではないかの確認
+	assert(m_pNode->pPrev != &m_pList->m_Dummy && "pre decrement: begin cant decrement");// 先頭ノードではないかの確認
 
 	m_pNode = m_pNode->pPrev;
 
@@ -33,7 +33,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::ConstIterator& DoubleLinkedList<DataType>::ConstIterator::operator++()
 {
 	assert(m_pNode && m_pList && "pre increment: no reference");// リストの参照があるかの確認
-	assert(m_pNode != m_pList->m_pDummy && "pre increment: dummy cant increment");// ダミーではないかの確認
+	assert(m_pNode != &m_pList->m_Dummy && "pre increment: dummy cant increment");// ダミーではないかの確認
 
 	m_pNode = m_pNode->pNext;
 
@@ -45,7 +45,7 @@ typename DoubleLinkedList<DataType>::ConstIterator DoubleLinkedList<DataType>::C
 {
 	assert(m_pNode && m_pList && "post decrement: no reference");// リストの参照があるかの確認
 	assert(m_pList->Count() > 0 && "post decrement: list is empty");//リストが空ではないかの確認
-	assert(m_pNode->pPrev != m_pList->m_pDummy && "post decrement: begin cant decrement");// 先頭ノードではないかの確認
+	assert(m_pNode->pPrev != &m_pList->m_Dummy && "post decrement: begin cant decrement");// 先頭ノードではないかの確認
 
 	ConstIterator iter(*this);//運算前のイテレータをコピー
 	m_pNode = m_pNode->pPrev;
@@ -57,7 +57,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::ConstIterator DoubleLinkedList<DataType>::ConstIterator::operator++(int i)
 {
 	assert(m_pNode && m_pList && "post increment: no reference");// リストの参照があるかの確認
-	assert(m_pNode != m_pList->m_pDummy && "post increment: dummy cant increment");// ダミーではないかの確認
+	assert(m_pNode != &m_pList->m_Dummy && "post increment: dummy cant increment");// ダミーではないかの確認
 
 	ConstIterator iter(*this);//運算前のイテレータをコピー
 	m_pNode = m_pNode->pNext;
@@ -85,7 +85,7 @@ template <typename DataType>
 typename const DataType& DoubleLinkedList<DataType>::ConstIterator::operator*() const
 {
 	assert(m_pNode && m_pList && "constIterator: no reference");//リストの参照があるかの確認
-	assert(m_pNode != m_pList->m_pDummy && "constIterator: is dummy");//ダミーではないかの確認
+	assert(m_pNode != &m_pList->m_Dummy && "constIterator: is dummy");//ダミーではないかの確認
 
 	return (*m_pNode).data;
 }
@@ -109,7 +109,7 @@ template <typename DataType>
 DataType& DoubleLinkedList<DataType>::Iterator::operator*()
 {
 	assert(m_pNode && m_pList && "iterator: no reference");//リストの参照があるかの確認
-	assert(m_pNode != m_pList->m_pDummy && "iterator: is dummy");//ダミーではないかの確認
+	assert(m_pNode != &m_pList->m_Dummy && "iterator: is dummy");//ダミーではないかの確認
 
 	return (*m_pNode).data;
 }
@@ -122,7 +122,7 @@ template<typename Comparator>
 inline void DoubleLinkedList<DataType>::QuickSort(Iterator head, Iterator tail, Comparator& greater)
 {
 	//有効なイテレータでない場合、失敗
-	if (head.IsVaild(this)==false || tail.IsVaild(this)==false)
+	if (head.IsVaild(this) == false || tail.IsVaild(this) == false)
 	{
 		return;
 	}
@@ -144,13 +144,13 @@ inline void DoubleLinkedList<DataType>::QuickSort(Iterator head, Iterator tail, 
 	while (1)
 	{
 		//右部分に、標準値pivotより小さい要素を見つけ出す
-		while (false== greater(*pivot ,*right) && right != left)
+		while (false == greater(*pivot, *right) && right != left)
 		{
 			right--;
 		}
 
 		//左部分に、標準値pivotより大きい要素を見つけ出す
-		while (false== greater(*left ,*pivot ) && left != right)
+		while (false == greater(*left, *pivot) && left != right)
 		{
 			left++;
 		}
@@ -197,38 +197,24 @@ inline void DoubleLinkedList<DataType>::Swap(Iterator& a, Iterator& b)
 template <typename DataType>
 DoubleLinkedList<DataType>::~DoubleLinkedList()
 {
-	//空の場合何もしない
-	if (m_Count == 0)return;
-
-	//先頭から、末尾までノードを削除
-	Node* del = m_pDummy->pNext;//先頭ノード取得
-	Node* next = del->pNext;//次のノードを先に取得
-	while (true)
+	//末尾から、先頭までノードを削除
+	while (m_Count > 0)
 	{
-		delete del;
-		del = nullptr;
-		if (next == m_pDummy)
-		{
-			break;
-		}
-		else
-		{
-			del = next;
-			next = next->pNext;
-		}
+		auto tail = End();
+		tail--;
+		Remove(tail);
 	}
 
-	//ダミーを削除
-	delete m_pDummy;
+	//test
+	std::cout << "after destructor count: " << m_Count << std::endl;
 }
 
 template <typename DataType>
 DoubleLinkedList<DataType>::DoubleLinkedList()
 {
 	m_Count = 0;
-	m_pDummy = new Node;
-	m_pDummy->pPrev = m_pDummy;
-	m_pDummy->pNext = m_pDummy;
+	m_Dummy.pPrev = &m_Dummy;
+	m_Dummy.pNext = &m_Dummy;
 }
 
 template <typename DataType>
@@ -271,7 +257,7 @@ bool DoubleLinkedList<DataType>::Remove(ConstIterator& positionIter)
 	}
 
 	//ダミーノードを指す場合、削除失敗
-	if (positionIter.m_pNode == m_pDummy)
+	if (positionIter.m_pNode == &m_Dummy)
 	{
 		return false;
 	}
@@ -307,7 +293,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::Iterator DoubleLinkedList<DataType>::Begin()
 {
 	Iterator iter;
-	iter.m_pNode = m_pDummy->pNext;
+	iter.m_pNode = m_Dummy.pNext;
 	iter.m_pList = this;
 	return iter;
 }
@@ -316,7 +302,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::Iterator DoubleLinkedList<DataType>::End()
 {
 	Iterator iter;
-	iter.m_pNode = m_pDummy;
+	iter.m_pNode = &m_Dummy;
 	iter.m_pList = this;
 	return iter;
 }
@@ -331,7 +317,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::ConstIterator DoubleLinkedList<DataType>::CBegin() const
 {
 	ConstIterator constIter;
-	constIter.m_pNode = m_pDummy->pNext;
+	constIter.m_pNode = m_Dummy.pNext;
 	constIter.m_pList = this;
 	return constIter;
 }
@@ -340,7 +326,7 @@ template <typename DataType>
 typename DoubleLinkedList<DataType>::ConstIterator DoubleLinkedList<DataType>::CEnd() const
 {
 	ConstIterator constIter;
-	constIter.m_pNode = m_pDummy;
+	constIter.m_pNode = (Node*)(&m_Dummy);
 	constIter.m_pList = this;
 	return constIter;
 }
