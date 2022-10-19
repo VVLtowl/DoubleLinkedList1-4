@@ -206,7 +206,7 @@ DoubleLinkedList<DataType>::~DoubleLinkedList()
 	}
 
 	//test
-	std::cout << "after destructor count: " << m_Count << std::endl;
+	//std::cout << "after destructor count: " << m_Count << std::endl;
 }
 
 template <typename DataType>
