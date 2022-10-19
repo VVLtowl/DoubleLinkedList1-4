@@ -6,8 +6,15 @@
 #include "../DoubleLinkedList/DoubleLinkedList.h"
 #include "ManualTest_ConstIterator.h"
 
+//双方向リストの手動テスト実行
+//#define GT_MANUAL_TEST_ITERATOR
+
 namespace ex02_ConstIterator
 {
+#ifdef GT_MANUAL_TEST_ITERATOR
+
+
+
 	/*********************************************************
 	* @brief		ConstIteratorから取得した要素に対して、値の代入が行えないかをチェック
 	* @details		ID:1-2
@@ -67,5 +74,8 @@ namespace ex02_ConstIterator
 		SUCCEED();
 #endif
 	}
+
+
+#endif // GT_MANUAL_TEST_ITERATOR
 
 }

@@ -35,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="ManualTest_ConstIterator.h" />
     <ClInclude Include="ManualTest_DoubleLinkedList.h" />
+    <ClInclude Include="ManualTest_QuickSort.h" />
     <ClInclude Include="TestTool.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +43,8 @@
     <ClCompile Include="AutoTest_DoubleLinkedList.cpp" />
     <ClCompile Include="ManualTest_ConstIterator.cpp" />
     <ClCompile Include="ManualTest_DoubleLinkedList.cpp" />
+    <ClCompile Include="AutoTest_QuickSort.cpp" />
+    <ClCompile Include="ManualTest_QuickSort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

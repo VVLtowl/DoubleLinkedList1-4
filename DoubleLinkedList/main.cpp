@@ -1,6 +1,6 @@
 /*********************************************************
-* @brief	双方向リストで読み取ったデータを標準出力に表示
-* @date		2022/10/14
+* @brief	クイックソートの後表示
+* @date		2022/10/17
 ********************************************************/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
@@ -10,29 +10,6 @@
 #include "ScoreData.h"
 #include "DoubleLinkedList.h"
 #include "CompareScoreData.h"
-
-
-/*********************************************************
-* @brief	スコア比較のファンクタ(昇順)
-********************************************************/
-class GreaterScore
-{
-public:
-	int operator()(const ScoreData& left, const ScoreData& right) {
-		return left.score > right.score;
-	}
-};
-
-/*********************************************************
-* @brief	名前比較のファンクタ(降順)
-********************************************************/
-class LessName
-{
-public:
-	int operator()(const ScoreData& left, const ScoreData& right) {
-		return left.name < right.name;
-	}
-};
 
 /*********************************************************
 * @brief	イテレートして「格納した順で」標準出力
@@ -106,7 +83,7 @@ int main(void)
 	//スコア昇順でソート
 	{
 		std::cout << "\n\n========== スコア昇順 ==========\n\n";
-		list.Sort(GreaterScore());
+		list.Sort(ScoreGreater());
 	}
 
 	//イテレートして「格納した順で」標準出力に表示
@@ -116,7 +93,7 @@ int main(void)
 	//名前降順でソート
 	{
 		std::cout << "\n\n========== 名前降順 ==========\n\n";
-		list.Sort(LessName());
+		list.Sort(NameLess());
 	}
 
 	//イテレートして「格納した順で」標準出力に表示

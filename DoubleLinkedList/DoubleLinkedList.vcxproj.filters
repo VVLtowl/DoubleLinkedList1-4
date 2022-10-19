@@ -24,9 +24,6 @@
     <ClInclude Include="ScoreData.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="IComparator.h">
-      <Filter>Compare</Filter>
-    </ClInclude>
     <ClInclude Include="CompareScoreData.h">
       <Filter>Compare</Filter>
     </ClInclude>
@@ -39,12 +36,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IComparator.cpp">
-      <Filter>Compare</Filter>
-    </ClCompile>
-    <ClCompile Include="CompareScoreData.cpp">
-      <Filter>Compare</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

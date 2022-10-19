@@ -1,40 +1,50 @@
+/*********************************************************
+* @brief		ソートのルールのヘッダー
+* @date			2022/10/17
+********************************************************/
 #pragma once
-#include "IComparator.h"
 #include "ScoreData.h"
 
-//========== 成績データの名前の比較キー ==========
 /*********************************************************
-* @brief	成績データの名前の比較キー
+* @brief	スコア比較のファンクタ(昇順)
 ********************************************************/
-class CompareScoreData_Name :
-    public IComparator<ScoreData>
+class ScoreGreater
 {
 public:
-	/*********************************************************
-	* @brief	二つのScoreDataの対象を、メンバー変数scoreにより比較する。
-	* return	left大なりrightの場合1を返す、
-	*			left小なりrightの場合-1を返す、
-	*			leftイコールrightの場合0を返す。
-	********************************************************/
-    int Compare(ScoreData& left, ScoreData& right)override;
+	inline int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.score > right.score;
+	}
 };
 
-//========== 成績データのスコアの比較キー ==========
 /*********************************************************
-* @brief	成績データのスコアの比較キー
+* @brief	スコア比較のファンクタ(降順)
 ********************************************************/
-class CompareScoreData_Score :
-    public IComparator<ScoreData>
+class ScoreLess
 {
 public:
-	/*********************************************************
-	* @brief	二つのScoreDataの対象を、メンバー変数nameにより比較する。
-	*			左から、nameのアルファベットを比べる（大文字小文字関係なし）、
-	*			アルファベット順で判断できない場合、nameの桁数で比較する。
-	* return	left大なりrightの場合1を返す、
-	*			left小なりrightの場合-1を返す、
-	*			leftイコールrightの場合0を返す。
-	********************************************************/
-    int Compare(ScoreData& left, ScoreData& right)override;
+	inline int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.score < right.score;
+	}
 };
 
+/*********************************************************
+* @brief	名前比較のファンクタ(昇順)
+********************************************************/
+class NameGreater
+{
+public:
+	inline int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.name > right.name;
+	}
+};
+
+/*********************************************************
+* @brief	名前比較のファンクタ(降順)
+********************************************************/
+class NameLess
+{
+public:
+	inline int operator()(const ScoreData& left, const ScoreData& right) {
+		return left.name < right.name;
+	}
+};

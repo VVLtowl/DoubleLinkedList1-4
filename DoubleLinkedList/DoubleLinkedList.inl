@@ -161,9 +161,6 @@ inline void DoubleLinkedList<DataType>::QuickSort(Iterator head, Iterator tail, 
 		//左部分に大きい要素を、右部分に小さい要素と位置交換する
 		if (left != right)
 		{
-			//test
-			//std::cout << "swap\n";
-
 			Swap(left, right);
 		}
 		// 二つの要素が同じ要素である場合、
@@ -172,9 +169,6 @@ inline void DoubleLinkedList<DataType>::QuickSort(Iterator head, Iterator tail, 
 		{
 			if (greater(*pivot, *left))//最後に、標準要素を正しい位置に移動
 			{
-				//test
-				//std::cout << "swap\n";
-
 				Swap(left, pivot);
 			}
 			break;
@@ -190,11 +184,14 @@ inline void DoubleLinkedList<DataType>::QuickSort(Iterator head, Iterator tail, 
 }
 
 template<typename DataType>
-inline void DoubleLinkedList<DataType>::Swap(Iterator a, Iterator b)
+inline void DoubleLinkedList<DataType>::Swap(Iterator& a, Iterator& b)
 {
-	DataType temp = *a;
-	*a = *b;
-	*b = temp;
+	//test
+	//std::cout << "swap\n";
+
+	auto copyData = (*a);
+	(*a) = (*b);
+	(*b) = copyData;
 }
 
 template <typename DataType>
@@ -294,6 +291,12 @@ template<typename DataType>
 template<typename Comparator>
 inline void DoubleLinkedList<DataType>::Sort(Comparator compare)
 {
+	//複数の要素数ではない場合、ソートはしない
+	if (m_Count < 2)
+	{
+		return;
+	}
+
 	Iterator head = Begin();
 	Iterator tail = End();
 	--tail;

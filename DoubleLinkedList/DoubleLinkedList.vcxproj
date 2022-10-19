@@ -141,15 +141,12 @@
   <ItemGroup>
     <ClInclude Include="CompareScoreData.h" />
     <ClInclude Include="DoubleLinkedList.h" />
-    <ClInclude Include="IComparator.h" />
     <ClInclude Include="ScoreData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DoubleLinkedList.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CompareScoreData.cpp" />
-    <ClCompile Include="IComparator.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

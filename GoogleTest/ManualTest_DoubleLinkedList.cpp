@@ -6,8 +6,14 @@
 #include "../DoubleLinkedList/DoubleLinkedList.h"
 #include "ManualTest_DoubleLinkedList.h"
 
+//双方向リストの手動テスト実行
+//#define GT_MANUAL_TEST_LIST
+
 namespace ex01_DoubleLinkedList
 {
+
+#if defined GT_MANUAL_TEST_LIST
+
 	/*********************************************************
 	* @brief		constのメソッドであるか
 	* @details		ID:0-8
@@ -120,6 +126,8 @@ namespace ex01_DoubleLinkedList
 		SUCCEED();
 #endif
 	}
+
+#endif
 }
 
 

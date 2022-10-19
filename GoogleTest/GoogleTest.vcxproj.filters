@@ -13,6 +13,12 @@
     <ClCompile Include="ManualTest_DoubleLinkedList.cpp">
       <Filter>ManualTest</Filter>
     </ClCompile>
+    <ClCompile Include="AutoTest_QuickSort.cpp">
+      <Filter>AutoTest</Filter>
+    </ClCompile>
+    <ClCompile Include="ManualTest_QuickSort.cpp">
+      <Filter>ManualTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ManualTest_ConstIterator.h">
@@ -22,6 +28,9 @@
       <Filter>ManualTest</Filter>
     </ClInclude>
     <ClInclude Include="TestTool.h" />
+    <ClInclude Include="ManualTest_QuickSort.h">
+      <Filter>ManualTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AutoTest">
@@ -30,5 +39,8 @@
     <Filter Include="ManualTest">
       <UniqueIdentifier>{822914b0-e731-4532-8875-0e415045419a}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
